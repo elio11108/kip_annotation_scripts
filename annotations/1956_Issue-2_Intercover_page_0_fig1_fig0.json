@@ -1,0 +1,19 @@
+{
+  "image_path": "/Users/zhaoye/Desktop/1956_TI_Dataset/raw_images/1956_Issue-2_Intercover_page_0_fig1_fig0.png",
+  "image_name": "1956_Issue-2_Intercover_page_0_fig1_fig0.png",
+  "image_size": {
+    "width": 2223,
+    "height": 2306
+  },
+  "bboxes": [
+    {
+      "x1": 0,
+      "y1": 53,
+      "x2": 1037,
+      "y2": 2259,
+      "label": "image",
+      "area": 2287622
+    }
+  ],
+  "num_annotations": 1
+}

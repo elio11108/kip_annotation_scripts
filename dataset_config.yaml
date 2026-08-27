@@ -1,0 +1,7 @@
+names:
+- image
+nc: 1
+path: /Users/zhaoye/Desktop/1956_TI_Dataset/processed_data
+test: test/images
+train: train/images
+val: val/images

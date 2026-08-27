@@ -1,0 +1,19 @@
+{
+  "image_path": "/Users/zhaoye/Desktop/1956_TI_Dataset/raw_images/1956_Issue-2_29_page_0_fig0_fig0.png",
+  "image_name": "1956_Issue-2_29_page_0_fig0_fig0.png",
+  "image_size": {
+    "width": 2058,
+    "height": 1763
+  },
+  "bboxes": [
+    {
+      "x1": 1589,
+      "y1": 8,
+      "x2": 2048,
+      "y2": 1757,
+      "label": "image",
+      "area": 802791
+    }
+  ],
+  "num_annotations": 1
+}

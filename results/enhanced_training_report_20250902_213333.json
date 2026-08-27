@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-09-02T21:33:33.492207",
+  "status": "timeout",
+  "elapsed_time_minutes": 30.29157615105311,
+  "max_time_limit_minutes": 30.0,
+  "dataset_info": {
+    "total_images": 108,
+    "total_annotations": 197,
+    "train_images": 75,
+    "val_images": 21,
+    "test_images": 12
+  },
+  "timeout_reason": "训练时间超过 30.0 分钟限制"
+}

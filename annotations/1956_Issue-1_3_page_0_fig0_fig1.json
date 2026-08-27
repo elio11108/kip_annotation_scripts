@@ -1,0 +1,27 @@
+{
+  "image_path": "/Users/zhaoye/Desktop/1956_TI_Dataset/raw_images/1956_Issue-1_3_page_0_fig0_fig1.png",
+  "image_name": "1956_Issue-1_3_page_0_fig0_fig1.png",
+  "image_size": {
+    "width": 2141,
+    "height": 3306
+  },
+  "bboxes": [
+    {
+      "x1": 501,
+      "y1": 1432,
+      "x2": 1586,
+      "y2": 2077,
+      "label": "image",
+      "area": 699825
+    },
+    {
+      "x1": 495,
+      "y1": 2088,
+      "x2": 1586,
+      "y2": 2319,
+      "label": "image",
+      "area": 252021
+    }
+  ],
+  "num_annotations": 2
+}

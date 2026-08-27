@@ -1,0 +1,19 @@
+{
+  "image_path": "/Users/zhaoye/Desktop/1956_TI_Dataset/raw_images/1956_Issue-1_40_page_0_fig0_fig0.png",
+  "image_name": "1956_Issue-1_40_page_0_fig0_fig0.png",
+  "image_size": {
+    "width": 2406,
+    "height": 1765
+  },
+  "bboxes": [
+    {
+      "x1": 775,
+      "y1": 748,
+      "x2": 2375,
+      "y2": 1753,
+      "label": "image",
+      "area": 1608000
+    }
+  ],
+  "num_annotations": 1
+}

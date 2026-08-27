@@ -1,0 +1,13 @@
+{
+  "model_info": {
+    "model_size": "n",
+    "model_path": "/Users/zhaoye/Desktop/1956_TI_Dataset/models/best_yolov8n.pt",
+    "total_parameters": 0,
+    "model_size_mb": 5.960428237915039
+  },
+  "training_results": {
+    "status": "completed",
+    "message": "Training completed successfully"
+  },
+  "evaluation_metrics": {}
+}

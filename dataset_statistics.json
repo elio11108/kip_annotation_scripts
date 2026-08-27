@@ -1,0 +1,51 @@
+{
+  "total_images": 108,
+  "total_annotations": 197,
+  "splits": {
+    "train": {
+      "num_images": 75,
+      "num_annotations": 136,
+      "avg_annotations_per_image": 1.8133333333333332
+    },
+    "val": {
+      "num_images": 21,
+      "num_annotations": 33,
+      "avg_annotations_per_image": 1.5714285714285714
+    },
+    "test": {
+      "num_images": 12,
+      "num_annotations": 28,
+      "avg_annotations_per_image": 2.3333333333333335
+    }
+  },
+  "bbox_statistics": {
+    "areas": {
+      "mean": 607952.2131979696,
+      "std": 555220.1917291568,
+      "min": 59438.0,
+      "max": 3266478.0,
+      "median": 400393.0
+    },
+    "aspect_ratios": {
+      "mean": 1.8967378896325542,
+      "std": 1.7164995699397376,
+      "min": 0.15081967213114755,
+      "max": 8.776,
+      "median": 1.2793791574279378
+    },
+    "widths": {
+      "mean": 864.1522842639594,
+      "std": 416.5451294035348,
+      "min": 263.0,
+      "max": 2132.0,
+      "median": 685.0
+    },
+    "heights": {
+      "mean": 704.7664974619289,
+      "std": 486.9798944081604,
+      "min": 125.0,
+      "max": 2300.0,
+      "median": 603.0
+    }
+  }
+}

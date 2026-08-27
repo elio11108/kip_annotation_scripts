@@ -1,0 +1,51 @@
+{
+  "image_path": "/Users/zhaoye/Desktop/1956_TI_Dataset/raw_images/1956_Issue-1_62_page_0_fig0_fig0.png",
+  "image_name": "1956_Issue-1_62_page_0_fig0_fig0.png",
+  "image_size": {
+    "width": 2117,
+    "height": 2087
+  },
+  "bboxes": [
+    {
+      "x1": 420,
+      "y1": 27,
+      "x2": 1707,
+      "y2": 219,
+      "label": "image",
+      "area": 247104
+    },
+    {
+      "x1": 747,
+      "y1": 386,
+      "x2": 1283,
+      "y2": 977,
+      "label": "image",
+      "area": 316776
+    },
+    {
+      "x1": 643,
+      "y1": 987,
+      "x2": 1509,
+      "y2": 1213,
+      "label": "image",
+      "area": 195716
+    },
+    {
+      "x1": 34,
+      "y1": 1276,
+      "x2": 493,
+      "y2": 1864,
+      "label": "image",
+      "area": 269892
+    },
+    {
+      "x1": 1673,
+      "y1": 1286,
+      "x2": 2104,
+      "y2": 1822,
+      "label": "image",
+      "area": 231016
+    }
+  ],
+  "num_annotations": 5
+}
