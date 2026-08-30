@@ -17,7 +17,13 @@ The first extraction pass over the KIP source scans used a Mask R-CNN model trai
 
 An initial 75/21/12 train/val/test split of the 108 annotated images was produced by `dataset_processor.py`. However, the splitter was originally run several times without a fixed random seed and without clearing previously written split directories, so images accumulated across splits: in the shipped `processed_data/` and `optimized_data/` directories, every val and test image is also present in train. The deployed detector (`models/super_optimized_best_yolov8n.pt`) was therefore in effect fine-tuned on the complete annotation set, and any validation curves produced against these contaminated splits are not generalization estimates (they have been removed from this repository). The retained `*.log` files still quote metric values from those sessions (e.g. `mAP50 ≈ 0.96` in `super_optimized_training.log` and `inference.log`, computed against the contaminated 82/57-image val/test splits); they are kept verbatim as session records and **must not be cited as detector accuracy**.
 
+The contamination also left three stale label files behind: `1956_Issue-1_1_page_0_fig0_fig1` and `1956_Issue-1_21_page_0_fig0_fig0` in `val/labels/`, and `1956_Issue-1_1_page_0_fig0_fig0` in `test/labels/`, carry earlier annotation versions that differ from the current `annotations/` records (and from their own train copies) — the annotations were revised between splitter runs. For any reuse, treat `annotations/` as the authoritative version of all 197 boxes.
+
 We keep the contaminated split directories as shipped because they are the exact training input of the deployed detector. Detector quality was not established by held-out metrics but by the downstream procedure described in the data paper's Methods: every re-extracted crop of the Chinese portion was manually re-cleaned. `dataset_processor.py` in this repository has since been fixed (seeded shuffle, split directories cleared before writing), so re-running it on a machine that has the original `raw_images/` crops (not distributed here) produces a clean, disjoint 75/21/12 split — note that a model retrained on such a split will differ from the deployed detector. **Warning:** re-running `dataset_processor.py` overwrites the shipped `processed_data/` split directories and rewrites `dataset_statistics.json`, i.e. it destroys the contamination evidence documented above; run it on a separate copy if you want to preserve the shipped state.
+
+## Annotation quality note
+
+16 of the 197 bounding boxes (8.1%, all in the 1956 files) extend slightly past the image border — negative coordinates of −2 to −3 px, or `x2`/`y2` exceeding the image size by up to 19 px (worst case: `annotations/1956_Issue-2_19_page_0_fig0_fig1.json`, `x2 = 1420` against width 1401). The cause was a missing clamp in `image_annotation_tool.py`'s canvas-to-image coordinate conversion (since fixed in this repository); the out-of-bounds values propagated verbatim into the shipped YOLO label files, where 44 label lines have normalized coordinates slightly outside `[0, 1]`. The overshoot is at most ~1.4% of the image dimension and Ultralytics clips such boxes internally during training, but **clip the boxes to the image bounds before reusing the annotations in other pipelines**. The shipped annotation and label files are kept as-is because they are the exact training input of the deployed detector (see the data-split note above).
 
 ## Repository structure
 
@@ -33,7 +39,7 @@ kip_annotation_scripts/
 ├── annotations/                # raw per-crop annotation records (JSON)
 ├── processed_data/{train,val,test}/labels/   # YOLO-format label files (txt)
 ├── optimized_data/{train,val,test}/          # resized training images + labels
-│                               #   (the complete trainable set, ~40 MB)
+│                               #   (the complete trainable set, ~58 MB)
 ├── models/                     # fine-tuned weights (best_yolov8n.pt,
 │                               #   super_optimized_best_yolov8n.pt) + train configs
 ├── results/                    # training reports (kept verbatim as provenance — none

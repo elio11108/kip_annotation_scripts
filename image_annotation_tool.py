@@ -209,6 +209,9 @@ class ImageAnnotationTool:
                 
     def start_drawing(self, event):
         """开始绘制标注框"""
+        # 未载入图像时不允许画框（此时 current_image 为 None）
+        if self.current_image is None:
+            return
         self.drawing = True
         self.start_x = self.canvas.canvasx(event.x)
         self.start_y = self.canvas.canvasy(event.y)
@@ -253,11 +256,25 @@ class ImageAnnotationTool:
             self.current_bbox = None
             return
             
-        # 转换为原图坐标
-        orig_x1 = int(x1 / self.scale_factor)
-        orig_y1 = int(y1 / self.scale_factor)
-        orig_x2 = int(x2 / self.scale_factor)
-        orig_y2 = int(y2 / self.scale_factor)
+        # 转换为原图坐标（每个坐标双边裁剪到图像边界内，防止画布坐标换算产生负值或越界；
+        # 历史标注中有 16/197 个框因缺少此裁剪而略微越界，见 README 的 Annotation quality note）
+        img_width, img_height = self.current_image.size
+        orig_x1 = min(max(0, int(x1 / self.scale_factor)), img_width)
+        orig_y1 = min(max(0, int(y1 / self.scale_factor)), img_height)
+        orig_x2 = min(max(0, int(x2 / self.scale_factor)), img_width)
+        orig_y2 = min(max(0, int(y2 / self.scale_factor)), img_height)
+
+        # 裁剪后再检查一次退化框（框完全画在图像外的画布空白处时会被裁成零宽/零高），丢弃
+        if orig_x2 - orig_x1 < 1 or orig_y2 - orig_y1 < 1:
+            if self.current_bbox:
+                self.canvas.delete(self.current_bbox)
+            self.current_bbox = None
+            return
+
+        # 把画布上的临时框校正为裁剪后的坐标，使显示与保存一致
+        self.canvas.coords(self.current_bbox,
+                           orig_x1 * self.scale_factor, orig_y1 * self.scale_factor,
+                           orig_x2 * self.scale_factor, orig_y2 * self.scale_factor)
         
         # 保存标注框
         bbox_info = {
