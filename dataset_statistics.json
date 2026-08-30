@@ -1,7 +1,8 @@
 {
   "total_images": 108,
   "total_annotations": 197,
-  "splits": {
+  "split_note": "The intended_splits block below records one 75/21/12 split produced by an early run of dataset_processor.py. It does NOT describe the shipped processed_data/ and optimized_data/ directories: the splitter was originally re-run without a fixed seed and without clearing previous outputs, so the on-disk splits are contaminated (all val and test images also appear in train; 108/82/57 files). The deployed detector was in effect trained on all 108 images and no held-out evaluation is reported. See the Data-split note in README.md.",
+  "intended_splits": {
     "train": {
       "num_images": 75,
       "num_annotations": 136,

@@ -33,7 +33,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(sys.stdout),
-        logging.FileHandler('/Users/zhaoye/Desktop/1956_TI_Dataset/super_optimized_training.log', encoding='utf-8')
+        logging.FileHandler(str(Path(__file__).resolve().parent / 'super_optimized_training.log'), encoding='utf-8')
     ]
 )
 logger = logging.getLogger(__name__)
@@ -689,8 +689,8 @@ class SystemMonitor:
 
 def main():
     """主函数"""
-    dataset_dir = "/Users/zhaoye/Desktop/1956_TI_Dataset"
-    
+    dataset_dir = str(Path(__file__).resolve().parent)
+
     # 检查数据集
     config_file = Path(dataset_dir) / "dataset_config.yaml"
     if not config_file.exists():

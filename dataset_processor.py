@@ -29,6 +29,15 @@ class DatasetProcessor:
         for split in ['train', 'val', 'test']:
             (self.processed_dir / split / 'images').mkdir(parents=True, exist_ok=True)
             (self.processed_dir / split / 'labels').mkdir(parents=True, exist_ok=True)
+
+    def clean_split_dirs(self):
+        """清空旧的分割结果，防止多次运行时图像跨分割累积（见 README 的 Data-split note）"""
+        for split in ['train', 'val', 'test']:
+            for sub in ['images', 'labels']:
+                split_sub_dir = self.processed_dir / split / sub
+                if split_sub_dir.exists():
+                    shutil.rmtree(split_sub_dir)
+                split_sub_dir.mkdir(parents=True, exist_ok=True)
     
     def load_annotations(self):
         """加载所有标注文件"""
@@ -76,8 +85,9 @@ class DatasetProcessor:
     def split_dataset(self, annotations, train_ratio=0.7, val_ratio=0.2, test_ratio=0.1):
         """分割数据集"""
         assert abs(train_ratio + val_ratio + test_ratio - 1.0) < 1e-6, "分割比例之和必须等于1"
-        
-        # 随机打乱
+
+        # 随机打乱（固定种子，保证分割可复现；见 README 的 Data-split note）
+        random.seed(42)
         random.shuffle(annotations)
         
         # 计算分割点
@@ -221,7 +231,10 @@ class DatasetProcessor:
         
         # 分割数据集
         dataset_splits = self.split_dataset(annotations)
-        
+
+        # 清空旧的分割目录后再写入
+        self.clean_split_dirs()
+
         # 处理各个分割
         for split_name, split_annotations in dataset_splits.items():
             self.process_split(split_name, split_annotations)
@@ -238,7 +251,7 @@ class DatasetProcessor:
         return config_file, stats
 
 def main():
-    dataset_dir = "/Users/zhaoye/Desktop/1956_TI_Dataset"
+    dataset_dir = str(Path(__file__).resolve().parent)
     processor = DatasetProcessor(dataset_dir)
     
     try:

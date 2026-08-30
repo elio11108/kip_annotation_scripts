@@ -300,16 +300,20 @@ class ImageInference:
 
 def main():
     """主函数"""
-    dataset_dir = "/Users/zhaoye/Desktop/1956_TI_Dataset"
-    
-    # 查找最佳模型
+    dataset_dir = str(Path(__file__).resolve().parent)
+
+    # 查找最佳模型：优先使用部署模型 super_optimized_best_yolov8n.pt，否则回退到 best_*.pt
     models_dir = Path(dataset_dir) / "models"
-    model_files = list(models_dir.glob("best_*.pt"))
-    
+    deployed_model = models_dir / "super_optimized_best_yolov8n.pt"
+    if deployed_model.exists():
+        model_files = [deployed_model]
+    else:
+        model_files = sorted(models_dir.glob("best_*.pt"))
+
     if not model_files:
         logger.error("未找到训练好的模型文件，请先运行 train_model.py")
         return
-    
+
     # 使用第一个找到的模型
     model_path = model_files[0]
     logger.info(f"使用模型: {model_path}")
